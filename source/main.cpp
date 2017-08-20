@@ -28,6 +28,14 @@ int cellSize = 2, memSize = 16384;
 byte* memory;
 byte* buffer;
 
+byte* tempStorage1;
+byte* tempStorage2;
+byte* tempStorage3;
+
+//Math functions
+void addBytes(byte*, byte*);
+void subtractBytes(byte*, byte*);
+
 //functions
 void setPointer(int, byte*);
 byte* getPointer(int);
@@ -552,6 +560,20 @@ int main(int argc, char* argv[])
     //allocates memory for the memory array; also initializes them to 0
     memory = (byte*)calloc(memSize, cellSize);
 
+    tempStorage1 = new byte[memSize];
+    tempStorage2 = new byte[memSize];
+    tempStorage3 = new byte[memSize];
+
+    tempStorage2[0] = 200;
+    tempStorage2[1] = 23;
+    tempStorage1[0] = 70;
+    tempStorage1[1] = 100;
+
+    subtractBytes(tempStorage1, tempStorage2);
+
+    cout << (int)tempStorage3[0] << endl;
+    cout << (int)tempStorage3[1] << endl;
+
     //removes any characters that are not l,1,[,], or | from the code. This allows for the use of comments in the source code
     cleanseCode(&code);
 
@@ -565,6 +587,31 @@ int main(int argc, char* argv[])
     execute(&commands);
 
     return 0;
+}
+
+/*
+ * Byte array operations: addition, subtraction, multiplication, division, modulus
+ * No operations return anything, but modify the pointer tempStorage3
+ */
+
+void addBytes(byte* bArray1, byte* bArray2) {
+    byte carry = 0;
+    int sum;
+    for(int i = 0; i < cellSize; i++) {
+        sum = *(bArray1 + i) + *(bArray2 + i) + carry;
+        tempStorage3[i] = sum;
+        carry = sum - tempStorage3[i];
+    }
+}
+
+void subtractBytes(byte* bArray1, byte* bArray2) {
+    int sub;
+    byte takeAway = 0;
+    for(int i = 0; i < cellSize; i++) {
+        sub = *(bArray1 + i) - *(bArray2 + i) + takeAway;
+        tempStorage3[i] = sub;
+        takeAway = (sub < 0) ? -1 : 0;
+    }
 }
 
 //function purely for testing and debugging
