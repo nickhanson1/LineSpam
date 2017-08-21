@@ -1,7 +1,7 @@
 # LineSpam
-Esoteric programming language!
+Who doesn't love soteric programming languages?
 
-Basically is a c++ program that compiles code that is in the text file provided into my personal language - LineSpam!
+Basically this is a c++ program that compiles code that is in the text file provided into my personal language - LineSpam!
 
 The language uses only a few commands made from only 5 characters. Most commands are standard, such as comparison operators, if statements, goto statements, and operations. The unique aspect of the language is its storage mechanic. The language stores values by numbers, and each number refers to a location on a byte array, much like a turing tape or disk storage. Operations can then be used inside the makeshift "pointers" to use arrays and other techniques that use varied location of storage. 
 
