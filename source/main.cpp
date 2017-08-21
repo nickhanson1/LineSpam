@@ -594,6 +594,14 @@ int main(int argc, char* argv[])
  * No operations return anything, but modify the pointer tempStorage3
  */
 
+int compare(byte* bArray1, byte* bArray2) {
+	for(int i = cellSize - 1; i > 0; i--) {
+		if(bArray1[i] > bArray2[i]) return 1;
+		if(bArray1[i] < bArray2[i]) return -1
+	}
+	return 0;
+}
+
 void addBytes(byte* bArray1, byte* bArray2) {
     byte carry = 0;
     int sum;
@@ -612,6 +620,30 @@ void subtractBytes(byte* bArray1, byte* bArray2) {
         tempStorage3[i] = sub;
         takeAway = (sub < 0) ? -1 : 0;
     }
+}
+
+void multiplyBytes(byte* bArray1, byte* bArray2) {
+    int carry = 0;
+    for(int i = 0; i < cellSize; i++) {
+		int product = *(bArray + i) * *(bArray2 + i) + carry;
+		carry = product - (product % 256);
+    	tempStorage3[i] = *(bArray + i) * *(bArray2 + i) + ((carry > 0) ? carry : 0);
+    }
+}
+
+void divideBytes(byte* bArray1, byte* bArray2) {
+	int dividend = 0;
+	tempStorage3 = *(bArray1)
+	while(compare(tempStorage3, bArray2) == 1) {
+		dividend++;
+		subtractBytes(tempStorage3, bArray2);
+	}
+	tempStorage3 = int_to_byte(dividend);
+}
+
+void moduloBytes(byte* bArray1, byte* bArray2) {
+	divideBytes(bArray1, bArray2);
+	subtractBytes(bArray1, multiplyBytes(bArray2, tempStorage3));
 }
 
 //function purely for testing and debugging
