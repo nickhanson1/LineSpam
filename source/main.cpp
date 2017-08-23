@@ -35,17 +35,26 @@ byte* tempStorage3;
 //Math functions
 void addBytes(byte*, byte*);
 void subtractBytes(byte*, byte*);
+void multiplyBytes(byte*, byte*);
+void divideBytes(byte*, byte*);
+void moduloBytes(byte*, byte*);
+void compareBytes(byte*, byte*);
+void compare(byte*, byte*);
 
 //functions
 void setPointer(int, byte*);
 byte* getPointer(int);
 int eval(string);
 void removeWhitespace(string s, vector<string>*);
+//integer to byte array conversion
 byte* int_to_byte(int);
 int byte_to_int(byte*);
+byte* llong_to_byte(long long);
 int getBinaryValue(string*);
+//string conversion
 string to_string(int);
 int to_int(string);
+long long to_llong(string);
 
 //test function
 void printVector(vector<string>*);
@@ -176,7 +185,7 @@ void tidyUp(vector<string>* commands) {
 
 //this takes a pointer command and returns the value associated with that pointer.
 //Will also evaluate pointers with nested pointers and expressions
-int evalPointer(string ptr) {
+byte* evalPointer(string ptr) {
     vector<string> ptrString;
     removeWhitespace(ptr, &ptrString);
 
@@ -191,7 +200,8 @@ int evalPointer(string ptr) {
     }
 
     int pointer = eval(temp);
-    return byte_to_int(getPointer(pointer));
+	//remove the byte_to_int to change return type to byte pointer
+    return getPointer(pointer);
 }
 
 //this function returns the leftmost character of the input and then removes it from the input string
@@ -213,6 +223,19 @@ int findValue(string val) {
         return getInput();
     }else if(val.substr(0,6).compare("NUMBER") == 0) {
         return to_int(val.substr(7));
+    }else if(val.substr(0,7).compare("POINTER") == 0) {
+        return evalPointer(val);
+    }
+    return to_int(val);
+}
+
+byte* findValueByte(string val) {
+    if(val.substr(0,5).compare("INPUT") == 0) {
+		for(int i = 0; i < cellSize; i++) buffer[i] = 0;
+        buffer[0] = getInput();
+		return buffer;
+    }else if(val.substr(0,6).compare("NUMBER") == 0) {
+        return llong_to_byte(to_llong(val.substr(7)));
     }else if(val.substr(0,7).compare("POINTER") == 0) {
         return evalPointer(val);
     }
@@ -675,6 +698,12 @@ int to_int(string s) {
     return iss;
 }
 
+long long to_llong(string s) {
+    long long iss;
+    istringstream (s) >> iss;
+    return iss;
+}
+
 //turns an integer to a string. same story as above
 string to_string(int i)
 {
@@ -701,6 +730,13 @@ byte* int_to_byte(int input) {
         buffer[i] = (input >> (8 * i)) & 0xFF;
     }
     return buffer;
+}
+
+byte* llong_to_byte(long long input) {
+	for(int i = 0; i < cellSize; i++) {
+		buffer[i] = (input >> (8 * i)) & 0xFF;
+	}
+	return buffer;
 }
 
 //returns the integer equivalent of a byte array value
