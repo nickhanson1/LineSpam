@@ -53,6 +53,7 @@ byte* llong_to_byte(long long);
 int getBinaryValue(string*);
 //string conversion
 string to_string(int);
+string to_string(byte*);
 int to_int(string);
 long long to_llong(string);
 
@@ -259,19 +260,19 @@ int eval(string s) {
 
     while(i < ops.size()) {
         if(ops.at(i).compare("MULTIPLY") == 0) {
-            int value1 = findValue(ops.at(i - 1));
-            int value2 = findValue(ops.at(i + 1));
-            int value3 = value1 * value2;
+            tempStorage1 = findValue(ops.at(i - 1));
+            tempStorage2 = findValue(ops.at(i + 1));
+            tempStorage3 = value1 * value2;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }else if(ops.at(i).compare("DIVIDE") == 0) {
-            int value1 = findValue(ops.at(i - 1));
-            int value2 = findValue(ops.at(i + 1));
-            int value3 = value1 / value2;
+            tempStorage1 = findValue(ops.at(i - 1));
+            tempStorage2 = findValue(ops.at(i + 1));
+            tempStorage3 = value1 / value2;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }else if(ops.at(i).compare("MODULO") == 0) {
@@ -279,7 +280,7 @@ int eval(string s) {
             int value2 = findValue(ops.at(i + 1));
             int value3 = value1 % value2;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }
@@ -293,7 +294,7 @@ int eval(string s) {
             int value2 = findValue(ops.at(i + 1));
             int value3 = value1 + value2;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }else if(ops.at(i).compare("SUBTRACT") == 0) {
@@ -301,7 +302,7 @@ int eval(string s) {
             int value2 = findValue(ops.at(i + 1));
             int value3 = value1 - value2;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }
@@ -316,7 +317,7 @@ int eval(string s) {
             int value3 = 0;
             if(value1 == value2) value3 = 1;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }else if(ops.at(i).compare("NOT") == 0) {
@@ -325,7 +326,7 @@ int eval(string s) {
             int value3 = 1;
             if(value1 == value2) value3 = 0;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }else if(ops.at(i).compare("GREATER_THAN") == 0) {
@@ -334,7 +335,7 @@ int eval(string s) {
             int value3 = 0;
             if(value1 > value2) value3 = 1;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }else if(ops.at(i).compare("LESS_THAN") == 0) {
@@ -343,7 +344,7 @@ int eval(string s) {
             int value3 = 0;
             if(value1 < value2) value3 = 1;
             ops.erase(ops.begin() + i);
-            ops.insert(ops.begin() + i, to_string(value3));
+            ops.insert(ops.begin() + i, to_string(tempStorage3));
             ops.erase(ops.begin() + i - 1);
             ops.erase(ops.begin() + i + 1);
         }
@@ -704,12 +705,28 @@ long long to_llong(string s) {
     return iss;
 }
 
+byte* string_to_byte(string s) {
+	buffer = llong_to_byte(to_llong(s));
+}
+
+long long byte_to_llong(byte* input) {
+    long long val = 0;
+    for(int i = 0; i < cellSize; i++) val += (*(input + i)) * pow(256, i);
+    return val;
+}
+
 //turns an integer to a string. same story as above
 string to_string(int i)
 {
     stringstream ss;
     ss << i;
     return ss.str();
+}
+
+string to_string(byte* cells) {
+	stringstream ss;
+	ss << byte_to_llong(cells);
+	return ss.str();
 }
 
 //uses a stringstream to split input string by whitespace
