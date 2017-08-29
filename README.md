@@ -97,6 +97,7 @@ And thats it! Its my first real programming language, and was meant as more of a
 
 
 #####NIFTY CHEAT SHEET#####
+ 
   1[    Open Pointer
   
   1]    Close Pointer
