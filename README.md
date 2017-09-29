@@ -1,5 +1,5 @@
 # LineSpam
-Who doesn't love soteric programming languages?
+Who doesn't love esoteric programming languages?
 
 Basically this is a c++ program that compiles code that is in the text file provided into my personal language - LineSpam!
 
