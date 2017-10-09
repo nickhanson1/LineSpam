@@ -52,9 +52,9 @@ In the last example a pointer was nested inside another. There is no limit to th
 #####GOTO AND LABELS#####
 
 Labels are areas of code that can be jumped to. They are represented by 
-  l1 followed by any number
+  l| followed by any number
 When a goto statement is called with that number, it will be jumped to. Gotos are called by
-  l| followed by the label number
+  l1 followed by the label number
 If the label number is not found, the line is skipped.
 
 #####INPUT AND OUTPUT#####
@@ -104,9 +104,9 @@ And thats it! Its my first real programming language, and was meant as more of a
   
   [,]   Numbers, in binary
   
-  l1    goto
+  l|    goto
   
-  l|    label
+  l1    label
   
   l[    print/output
   
