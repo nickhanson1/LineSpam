@@ -15,7 +15,7 @@ public class LineSpam {
 	private static String path = "";
 	private static String code = "";
 	private static String input = "";
-	//LinkedList that contains the commands of the code
+	//Linked List that contains the commands of the code
 	private static LinkedList<String> commands = new LinkedList<String>();
 	//ArrayList that contains the labels in the code
 	private static ArrayList<Label> labels = new ArrayList<Label>();
