@@ -98,9 +98,9 @@ And thats it! Its my first real programming language, and was meant as more of a
 
 #####NIFTY CHEAT SHEET#####
  
-  1[    Open Pointer
+  l[    Open Pointer
   
-  1]    Close Pointer
+  l]    Close Pointer
   
   [,]   Numbers, in binary
   
@@ -108,9 +108,9 @@ And thats it! Its my first real programming language, and was meant as more of a
   
   l1    label
   
-  l[    print/output
+  1[    print/output
   
-  l]    input
+  1]    input
   
   ||    assignment
   
